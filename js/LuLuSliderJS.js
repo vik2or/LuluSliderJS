@@ -1,3 +1,11 @@
+var LuLuSliderJS = {
+    init: function(){
+        console.log('am initializat sliderul');
+    }
+}
+
 (function(){
-    console.log('test');
+
+    LuLuSliderJS.init();
+
 })();
