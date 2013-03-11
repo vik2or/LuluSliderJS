@@ -1,0 +1,42 @@
+body{
+
+}
+
+#slider,
+#slider-two{
+    width: 960px;
+    margin: 100px auto;
+    overflow: hidden;
+}
+
+#slider ul,
+#slider-two ul{
+    list-style: none;
+    width: 9999px;
+    padding: 0;
+}
+
+#slider ul li,
+#slider-two ul li{
+    float: left;
+    width: 960px;
+    margin-right: 50px;
+    border: solid 1px red;
+}
+
+#slider .nav-buttons,
+#slider-two .nav-buttons{
+    text-align: center;
+}
+
+#slider .nav-buttons span,
+#slider-two .nav-buttons span{
+    background: #444;
+    height: 10px;
+    width: 10px;
+    margin-right: 5px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    display: inline-block;
+}
