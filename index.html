@@ -2,11 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>An HTML 5 Document</title>
+    <title>A page test for LuLuSliderJS</title>
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-    
+
+<section class="wrapper">
+    <div id="slider">
+        <ul>
+            <li>slide 1 text</li>
+            <li>slide 2 text</li>
+            <li>slide 3 text</li>
+        </ul>
+
+        <div class="nav-arrows">
+            <a href="#" class="prev">&lt;</a>
+            <a href="#" class="next">&gt;</a>
+        </div>
+
+        <div class="nav-buttons">
+            <span data-slide="0"></span>
+            <span data-slide="1"></span>
+            <span data-slide="2"></span>
+        </div>
+    </div>
+</section>
+
+
+<section class="wrapper">
+    <div id="slider-two">
+        <ul>
+            <li>slide 1 text</li>
+            <li>slide 2 text</li>
+            <li>slide 3 text</li>
+        </ul>
+
+        <div class="nav-arrows">
+            <a href="#" class="prev">&lt;</a>
+            <a href="#" class="next">&gt;</a>
+        </div>
+
+        <div class="nav-buttons">
+            <span data-slide="0"></span>
+            <span data-slide="1"></span>
+            <span data-slide="2"></span>
+        </div>
+    </div>
+</section>
 <script src="js/jquery.min.js"></script>
-<script src="js/LuLuSlideJS"></script>
+<script src="js/LuLuSliderJS.js"></script>
+<script src="js/jquery.LuLuSlider.js"></script>
+<script>
+(function(){
+    // LuLuSliderJS.init('#slider');
+    // LuLuSliderJS.init('#slider-two');
+
+    $('#slider').LuLuSlider();
+    $('#slider-two').LuLuSlider();
+})();
+</script>
 </body>
 </html>
