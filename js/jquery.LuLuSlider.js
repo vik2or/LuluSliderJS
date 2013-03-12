@@ -33,7 +33,7 @@
         }
 
         function createNavButtons(elements, target){
-            $(target + ' .nav-buttons').empty;
+            $(target + ' .nav-buttons').empty();
             elements.each(function( index ) {
                 $('<span data-slide="' + index + '"></span>').appendTo( target + ' .nav-buttons');
             });
