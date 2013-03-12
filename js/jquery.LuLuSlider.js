@@ -1,60 +1,95 @@
 (function( $ ) {
-    $.fn.LuLuSlider = function() {
-        var self = this;
-        var current = 0;
-        var elementWidth = self.find('li').outerWidth(true);
-        var slidesNumber = self.find('li').length;
+    $.fn.LuLuSlider = function(options) {
 
-        self.find('.nav-arrows a').bind('click', function(){
-            ($(this).hasClass('prev')) ? current-- : current++;
-            goTo(current);
+
+        var settings    = $.extend( {
+            loadButtons : false,
+            navButtons  : 'nav-buttons',
+            navArrows   : false
+        }, options);
+
+        settings.current        = 0;
+        settings.total          = this.find('li').length;
+        settings.elementWidth   = this.find('li').outerWidth(true);
+        settings.$slider        = this;
+
+
+        settings.$slider.find('.nav-arrows a').bind('click', function(){
+            ($(this).hasClass('prev')) ? settings.current-- : settings.current++;
+            goTo(settings.current);
             return false;
         });
 
-        self.on('click', '.nav-buttons span', function(){
+        settings.$slider.on('click', '.nav-buttons span', function(){
             goTo($(this).data('slide'));
         });
 
-        $('#load').bind('click', function(){
-            load($(this).attr('href'), $(this).data('target'));
-            return false;
-        });
+        if(settings.navButtons){
+            createNavButtons();
+            markActive(settings.current);
+        }
 
+        // Bind load on a button if is passed in options
+        if(settings.loadButtons){
+            $(settings.loadButtons).bind('click', function(){
+                loadSlides( $(this).attr('href'), createNavButtons );
+                return false;
+            });
+        }
+
+        function markActive(slide){
+            settings.$slider.find('.nav-buttons span').removeClass('active');
+            settings.$slider.find('.nav-buttons span').eq(slide).addClass('active');
+        }
+
+        //
         function goTo(slide){
-            if(slide >= slidesNumber){
-                current = 0;
+            console.log(slide);
+            if(slide >= settings.total){
+                settings.current = 0;
             }else if(slide < 0 ){
-                current = slidesNumber - 1;
+                settings.current = settings.total - 1;
             }else{
-                current = slide;
+                settings.current = slide;
             }
 
-            self.find('ul').animate({ marginLeft : -current*elementWidth})
+            markActive(settings.current);
+            settings.$slider.find('ul').animate({ marginLeft : -settings.current*settings.elementWidth})
         }
 
-        function createNavButtons(elements, target){
-            $(target + ' .nav-buttons').empty();
+        // Create bullets nav buttons
+        function createNavButtons(){
+            var elements = settings.$slider.find('li');
+
+            if( settings.$slider.find( '.' + settings.navButtons).length == 0 ){
+                $('<div></div>',{
+                    class: settings.navButtons
+                }).appendTo(settings.$slider);
+            }
+
+            settings.$slider.find( '.' + settings.navButtons).empty();
+
             elements.each(function( index ) {
-                $('<span data-slide="' + index + '"></span>').appendTo( target + ' .nav-buttons');
+                $('<span data-slide="' + index + '"></span>').appendTo( settings.$slider.find(' .nav-buttons') );
             });
+
+            goTo(0);
         }
 
-        function load(url, target){
+
+        // Load slides via ajax
+        function loadSlides(url, callback){
             $.ajax({
                 type: "GET",
-                url: "ajax/" + url,
+                url: url,
                 cache: false
-            }).success(function( msg ) {
-
-                $(target).find('ul').fadeOut(function() {
-                    $(this).html('').append(msg).fadeIn();
-                    var slides = $(target).find('li');
-                    slidesNumber = slides.length;
-                    createNavButtons(slides, target);
+            }).success(function( response ) {
+                settings.$slider.find('ul').fadeOut(function() {
+                    $(this).empty().append( response ).fadeIn();
+                    settings.total = settings.$slider.find('li').length;
+                    callback();
                 });
-
             });
         }
-
     };
 })( jQuery );
