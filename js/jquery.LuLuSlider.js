@@ -1,7 +1,8 @@
 (function( $ ) {
     $.fn.LuLuSlider = function(options) {
 
-
+        // fork test
+        
         var settings    = $.extend( {
             loadButtons : false,
             navButtons  : '.nav-buttons'
